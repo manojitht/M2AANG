@@ -5,7 +5,6 @@ class Node:
         self.next = next
         self.prev = prev
 
-
 H = Node(1)
 A = Node(2)
 B = Node(3)
@@ -43,6 +42,43 @@ def search(head, data):
             print("yes")
         curr = curr.next
 
+def count(head):
+    curr = head
+    length = 0
+    while curr is not None:
+        length += 1
+        curr = curr.next
+    print(f"The count of the LL is {length}.")
+
+def insert_first(head, data):
+    new_node = Node(data)
+    new_node.next = head
+    if head is not None:
+        head.prev = new_node
+    return new_node
+
+def insert_last(head, data):
+    new_node = Node(data)
+    if head is None:
+        head = new_node
+    else:
+        curr = head
+        while curr.next is not None:
+            curr = curr.next
+        curr.next = new_node
+        new_node.prev = curr
+    return head
+
+
 # forward_traversal(H)
 # backward_traversal(T)
 # search(H, 3)
+# count(H)
+
+## insert first
+# h = insert_first(H, 7)
+# forward_traversal(h)
+
+## insert last
+# h = insert_last(H, 7)
+# forward_traversal(h)
