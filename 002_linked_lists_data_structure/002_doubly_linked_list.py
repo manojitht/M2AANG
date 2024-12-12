@@ -69,6 +69,8 @@ def insert_last(head, data):
         new_node.prev = curr
     return head
 
+def insert_position(head, data):
+    pass
 
 # forward_traversal(H)
 # backward_traversal(T)
