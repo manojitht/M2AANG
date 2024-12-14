@@ -100,9 +100,14 @@ def insert_position(head, pos,data):
 
     return head
 
+#------------------------------------------
+
 # forward_traversal(H)
+
 # backward_traversal(T)
+
 # search(H, 3)
+
 # count(H)
 
 ## insert first
