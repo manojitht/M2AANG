@@ -69,8 +69,36 @@ def insert_last(head, data):
         new_node.prev = curr
     return head
 
-def insert_position(head, data):
-    pass
+def insert_position(head, pos,data):
+
+    new_node = Node(data)
+
+    if pos == 1:
+        new_node.next = head
+        if head is not None:
+            head.prev = new_node
+        head = new_node
+        return head
+
+    curr = head
+    for _ in range(1, pos - 1):
+        if curr is None:
+            print("The pos is out of bound.")
+            return head
+        curr = curr.next
+
+    if curr is None:
+        print("The pos is out of bound.")
+        return head
+
+    new_node.prev = curr
+    new_node.next = curr.next
+    curr.next = new_node
+
+    if new_node.next is not None:
+        new_node.next.prev = new_node
+
+    return head
 
 # forward_traversal(H)
 # backward_traversal(T)
@@ -83,4 +111,8 @@ def insert_position(head, data):
 
 ## insert last
 # h = insert_last(H, 7)
+# forward_traversal(h)
+
+## insert position
+# h = insert_position(H, 3, 7)
 # forward_traversal(h)
