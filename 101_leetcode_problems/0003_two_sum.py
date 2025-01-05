@@ -28,9 +28,19 @@
 # Solution
 
 def two_sum( nums, target):
-    count = 0
-    while len(nums) != count:
-        for i in range(len(nums)):
-            if nums[count] + nums[i] == target and count != i:
-                return [count, i]
-        count += 1
+    # Solution 1 - Brute Force
+    # count = 0
+    # while len(nums) != count:
+    #     for i in range(len(nums)):
+    #         if nums[count] + nums[i] == target and count != i:
+    #             return [count, i]
+    #             break
+    #     count += 1
+
+    # Solution 2 - Hash Map
+    hash_map = {}
+    for index, value in enumerate(nums):
+        num = target - value
+        if num in hash_map:
+            return [hash_map[num], index]
+        hash_map[value] = index
