@@ -1,4 +1,4 @@
-# Valid Anagram
+# Valid Anagram (Array and Hashing)
 # Solved
 # Given two strings s and t, return true if the two strings are anagrams of each other, otherwise return false.
 #
