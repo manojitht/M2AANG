@@ -28,7 +28,6 @@ def is_palindrome(self, s: str) -> bool:
 
     # Method 2 using two pointers without built functions for alphanumeric
     l, r = 0, len(s) - 1
-
     while l < r:
         while l < r and not self.alphaNum(s[l]):
             l += 1
