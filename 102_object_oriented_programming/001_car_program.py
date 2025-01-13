@@ -13,6 +13,7 @@
 # Once you've written the class, create an instance of it, display the information, and simulate the car being driven.
 
 
+# My Code
 class Car:
     def __init__(self, make, model, year, mileage):
         self.make = make
@@ -32,3 +33,24 @@ car1 = Car("Toyota", "Corolla", 2000, 15000)
 car1.display_info()
 miles = int(input("What is the mile ran: "))
 car1.drive(miles)
+
+## AI Code
+# class Car:
+#     def __init__(self, make, model, year, mileage):
+#         self.make = make
+#         self.model = model
+#         self.year = year
+#         self.mileage = mileage
+#
+#     def display_info(self):
+#         print(f"{self.year} {self.make} {self.model} with {self.mileage} miles.")
+#
+#     def drive(self, miles):
+#         self.mileage += miles  # Update the mileage attribute
+#         print(f"The car has now run {self.mileage} miles.")
+#
+#
+# car1 = Car("Toyota", "Corolla", 2000, 15000)
+# car1.display_info()
+# miles = int(input("How many miles has the car run now? "))
+# car1.drive(miles)
