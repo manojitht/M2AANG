@@ -50,8 +50,6 @@
 # 4. Display the order details, including the total amount and remaining stock of the products.
 #
 # This problem introduces **composition** (via the `Order` class), in addition to other OOP principles. It's a step up in difficulty and requires more interactions between classes. Submit your solution for grading once you're done! 😊
-from itertools import product
-
 
 ## My Code:
 class Product:
