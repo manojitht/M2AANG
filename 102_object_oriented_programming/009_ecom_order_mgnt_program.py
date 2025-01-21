@@ -50,6 +50,7 @@
 # 4. Display the order details, including the total amount and remaining stock of the products.
 #
 # This problem introduces **composition** (via the `Order` class), in addition to other OOP principles. It's a step up in difficulty and requires more interactions between classes. Submit your solution for grading once you're done! 😊
+from itertools import product
 
 
 ## My Code:
@@ -94,17 +95,59 @@ class ElectronicProduct(Product):
             f"Product: {product_name}, Price: {product_price}, Stock: {product_stock}, Warranty: {product_warranty} years.")
 
 
-# class Order:
-#     def __init__(self, order_id, total_amount):
-#         self.order_id = order_id
-#         self.product = Product(name, price, stock)
-#         self.products = []
-#         self.total_amount = totaL_amount
-#
-#     def add_product(self, product, quantity):
-#         if product == self.product.name and
-            ## continue from here.
+class Order:
+    def __init__(self, order_id):
+        self.order_id = order_id
+        self.products = []
+        self.total_amount = 0
 
+    def add_product(self, product, quantity):
+        if 0 < quantity <= product.stock:
+            product.stock -=  quantity
+            purchased_product = [product, quantity]
+            self.products.append(purchased_product)
+            print(f"Successfully added {product.name} of quantity {quantity}, to order list.")
+        elif 0 < quantity and quantity > product.stock:
+            print(f"Sorry! the available stock is {product.stock}, but you entered quantity of {quantity}")
+        elif quantity <= 0:
+            print(f"Sorry! Invalid quantity {quantity} entered, please check!")
+
+    def calculate_total(self):
+        product_list = len(self.products)
+        self.total_amount = 0
+        for product in range(product_list):
+            product_name, quantity = self.products[product]
+            self.total_amount += product_name.price * quantity
+        return self.total_amount
+
+    def display_order(self):
+        print(f"***** Order Details of {self.order_id} *****")
+        product_list = len(self.products)
+        for product in range(product_list):
+            product_name, quantity = self.products[product]
+            print(f"{product + 1}. Product Name: {product_name.name}, Ordered Quantity: {quantity}, Remaining Stock: {product_name.stock}.")
+        print(f"The total amount of the order id: {self.order_id}, is Rs.{self.calculate_total()}.")
+
+
+TShirt = Product("TShirt", 500, 50)
+SmartPhone = ElectronicProduct("SmartPhone", 20000, 30, 1)
+
+ORD001 = Order("ORD001")
+ORD001.add_product(TShirt, 10)
+ORD001.add_product(SmartPhone, 2)
+ORD001.display_order()
+
+
+
+## Encapsulation idea:
+# def get_stock(self):
+#     return self._stock
+#
+# def set_stock(self, amount):
+#     if amount >= 0:
+#         self._stock = amount
+#     else:
+#         print("Invalid stock amount!")
 
 
 
