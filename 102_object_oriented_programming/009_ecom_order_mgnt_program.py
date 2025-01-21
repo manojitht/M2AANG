@@ -89,8 +89,7 @@ class ElectronicProduct(Product):
         product_price = self.price
         product_stock = self.stock
         product_warranty = self.warranty
-        print(
-            f"Product: {product_name}, Price: {product_price}, Stock: {product_stock}, Warranty: {product_warranty} years.")
+        print(f"Product: {product_name}, Price: {product_price}, Stock: {product_stock}, Warranty: {product_warranty} years.")
 
 
 class Order:
