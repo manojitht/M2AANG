@@ -161,6 +161,14 @@ class VehicleRentalSystem:
     def __init__(self):
         self.vehicles = []
 
+    ## AI code add_vehicle() method best practices suggestion for vehicle validation
+    # def add_vehicle(self, vehicle):
+    #     if any(v.vehicle_id == vehicle.vehicle_id for v in self.vehicles):
+    #         print(f"Vehicle ID {vehicle.vehicle_id} already exists! Cannot add duplicate.")
+    #     else:
+    #         self.vehicles.append(vehicle)
+    #         print(f"Vehicle ID: {vehicle.vehicle_id}, Vehicle Type: {vehicle.vehicle_type} was added successfully!")
+
     def add_vehicle(self, vehicle):
         self.vehicles.append(vehicle)
         print(f"Vehicle Id: {vehicle.vehicle_id}, Vehicle Type: {vehicle.vehicle_type}  was added successfully!")
