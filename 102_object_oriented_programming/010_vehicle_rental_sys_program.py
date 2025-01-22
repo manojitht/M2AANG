@@ -167,20 +167,27 @@ class VehicleRentalSystem:
 
     def rent_vehicle(self, vehicle_id, days):
         for vehicle in self.vehicles:
-            if vehicle_id == vehicle.vehicle_id and vehicle.availability:
-                return vehicle.rent_vehicle(days)
-            elif not vehicle.availability:
-                return f"Sorry! Vehicle Id: {vehicle_id} is already booked"
-            else:
-                return f"Sorry! No Vehicle Id: {vehicle_id} is available, please check!"
+            if vehicle_id == vehicle.vehicle_id:
+                if vehicle.availability:
+                    print("\n__________________________________________")
+                    return vehicle.rent_vehicle(days)
+                else:
+                    print("\n__________________________________________")
+                    return f"Sorry! Vehicle Id: {vehicle_id} is already booked"
+        print("\n__________________________________________")
+        return f"Sorry! No Vehicle Id: {vehicle_id} is available, please check!"
 
     def return_vehicle(self, vehicle_id):
         for vehicle in self.vehicles:
-            if vehicle_id == vehicle.vehicle_id and vehicle.availability:
-                return f"This Vehicle Id: {vehicle_id}, already returned"
-            elif vehicle_id == vehicle.vehicle_id and not vehicle.availability:
-                return vehicle.return_vehicle()
+            if vehicle_id == vehicle.vehicle_id:
+                if not vehicle.availability:
+                    print("\n__________________________________________")
+                    return vehicle.return_vehicle()
+                else:
+                    print("\n__________________________________________")
+                    return f"This Vehicle Id: {vehicle_id}, already returned"
             else:
+                print("\n__________________________________________")
                 return f"Sorry! No Vehicle Id: {vehicle_id} is exists, please check!"
 
     def display_all_vehicles(self):
@@ -197,11 +204,11 @@ bike = Bike(201, "Bike", 300, True, 150)
 truck = Truck(301, "Truck", 2000, True, 10)
 
 rental_company = VehicleRentalSystem()
-rental_company.add_vehicle(car)
 rental_company.add_vehicle(bike)
+rental_company.add_vehicle(car)
 rental_company.add_vehicle(truck)
 
-# rental_company.rent_vehicle(101, 3)
+rental_company.rent_vehicle(201, 3)
 rental_company.rent_vehicle(301, 8)
 rental_company.display_all_vehicles()
 
