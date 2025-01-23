@@ -89,3 +89,67 @@
 # - Encapsulate logic in appropriate classes and methods.
 
 # Let me know when you're done or if you have questions while solving! 😊
+
+## My Code
+class Product:
+    def __init__(self, product_id: int, name: str, price: float, quantity_in_stock: int):
+        self.product_id = product_id
+        self.name = name
+        self.price = price
+        self.quantity_in_stock = quantity_in_stock
+
+    def check_availability(self, name):
+        if self.quantity_in_stock > 0:
+            print(f"The product {name} is available.")
+            return True
+        else:
+            print(f"Sorry product {name} not available.")
+            return False
+
+    def display_products(self):
+        print(f"Product ID: {self.product_id}")
+        print(f"Product Name: {self.name}")
+        print(f"Product Price: {self.price}")
+        print(f"No.of.items: {self.price}")
+
+class Electronic(Product):
+    def __init__(self, product_id: int, name: str, price: float, quantity_in_stock: int, brand: str, warranty: float):
+        super().__init__(product_id, name, price, quantity_in_stock)
+        self.brand = brand
+        self.warranty = warranty
+
+    def check_availability(self, name):
+        super().check_availability(name)
+
+    def display_products(self):
+        super().display_products()
+        print(f"Product Brand: {self.brand}")
+        print(f"Product Warranty: {self.warranty} Yrs")
+
+class Clothing(Product):
+    def __init__(self, product_id: int, name: str, price: float, quantity_in_stock: int, size: str, material: str):
+        super().__init__(product_id, name, price, quantity_in_stock)
+        self.size = size
+        self.material = material
+
+    def check_availability(self, name):
+        super().check_availability(name)
+
+    def display_products(self):
+        super().display_products()
+        print(f"Product Size: {self.size}")
+        print(f"Product Material: {self.material}")
+
+class ShoppingCart:
+    def __init__(self):
+        self.products = {}
+
+    def add_product(self, product):
+        pass
+
+
+
+
+
+
+
