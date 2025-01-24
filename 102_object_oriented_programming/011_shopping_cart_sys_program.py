@@ -144,8 +144,61 @@ class ShoppingCart:
     def __init__(self):
         self.products = {}
 
-    def add_product(self, product):
-        pass
+    def add_product(self, product, quantity):
+        if product.check_availability(product.name):
+            self.products[product.name] = [quantity, quantity * product.price]
+            print(f"Product {product.name} with quantity {quantity} added to the cart!")
+        else:
+            print(f"Product {product.name} not available with quantity of {quantity}!")
+
+    def remove_product(self, product):
+        if product.name in self.products.keys():
+            self.products.pop(product.name)
+            print(f"Successfully removed product {product.name} from cart.")
+        else:
+            print(f"No product {product.name} found in cart.")
+
+    def view_items(self):
+        print("__________________________________________________")
+        print("                 Cart Items List                  ")
+        print("__________________________________________________")
+        count = 0
+        for product, quantity in self.products.items():
+            count += 1
+            print(f"Product: {product}  ->  Quantity: {quantity[0]}  ->  Price: ${quantity[1]}")
+        print("__________________________________________________")
+        print(f"           Total cart items: {count}             ")
+        print("__________________________________________________")
+
+    def apply_discount(self, price):
+        if price > 500:
+            discount = (10 / 100) * price
+            new_price = price - discount
+            print(f"Eligible for discount of 10% and the discounted price is ${new_price}")
+            return new_price
+        else:
+            print(f"Not eligible for discount!")
+            return price
+
+    def calculate_price(self):
+        total_price = 0
+        for price in self.products.values():
+            total_price += price[1]
+        print(f"Total price of the cart items is ${self.apply_discount(total_price)}.")
+
+
+# class Order:
+#     def __init__(self, order_id: int, total_price: float):
+#         self.order_id = order_id
+#         self.total_price = total_price
+#         self.cart_items =
+
+
+
+
+
+
+
 
 
 
