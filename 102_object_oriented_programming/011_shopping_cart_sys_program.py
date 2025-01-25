@@ -146,7 +146,7 @@ class ShoppingCart:
 
     def add_product(self, product, quantity):
         if product.check_availability(product.name):
-            self.products[product.name] = [quantity, quantity * product.price]
+            self.products[product.name] = [product, quantity, quantity * product.price]
             print(f"Product {product.name} with quantity {quantity} added to the cart!")
         else:
             print(f"Product {product.name} not available with quantity of {quantity}!")
@@ -165,7 +165,7 @@ class ShoppingCart:
         count = 0
         for product, quantity in self.products.items():
             count += 1
-            print(f"Product: {product}  ->  Quantity: {quantity[0]}  ->  Price: ${quantity[1]}")
+            print(f"Product: {product}  ->  Quantity: {quantity[1]}  ->  Price: ${quantity[2]}")
         print("__________________________________________________")
         print(f"           Total cart items: {count}             ")
         print("__________________________________________________")
@@ -183,15 +183,73 @@ class ShoppingCart:
     def calculate_price(self):
         total_price = 0
         for price in self.products.values():
-            total_price += price[1]
+            total_price += price[2]
         print(f"Total price of the cart items is ${self.apply_discount(total_price)}.")
 
 
-# class Order:
-#     def __init__(self, order_id: int, total_price: float):
-#         self.order_id = order_id
-#         self.total_price = total_price
-#         self.cart_items =
+class Order:
+    def __init__(self, order_id: int, total_price: float, shopping_cart):
+        self.order_id = order_id
+        self.total_price = total_price
+        self.shopping_cart = shopping_cart
+
+    def process_order(self):
+        for product in self.shopping_cart.values():
+            product_obj = product[0]
+            deduct_quantity = product[1]
+            remaining_quantity = product_obj.quantity_in_stock - deduct_quantity
+            product_obj.quantity_in_stock = remaining_quantity
+
+        print("__________________________________________________")
+        print(f"            Order Receipt: {self.order_id}       ")
+        print(self.shopping_cart.view_items())
+        print("__________________________________________________")
+        print(self.shopping_cart.calculate_price())
+        print("__________________________________________________")
+
+
+laptop = Electronic(100, "Aspiron Laptop", 900, 10, "Dell", 2)
+tshirt = Clothing(101, "Abbrow T-Shirt", 50, 25, "M", "Lenin")
+categories = [laptop, tshirt]
+
+print("""
+------------------------------------------------------
+        Welcome to our World One Online store!
+------------------------------------------------------
+                  Menu option list
+------------------------------------------------------
+Press 1: to view the available products.
+Press 2: to add the items on the cart.
+Press 3: to remove items from the cart.
+Press 4: to view cart details.
+Press 5: to checkout and process the order receipt.
+-----------------------------------------------------
+""")
+
+command = str(input("Enter 'Yes' to shopping (or) Enter 'Exit' to close: ")).lower()
+while command != "exit":
+    option = int(input("Enter your option: "))
+    if option == 1:
+        count = 0
+        for category in categories:
+            count += 1
+            print(f"Product No. {count}:")
+            category.display_products()
+            print("\n")
+    elif option == 2:
+        item_name = int(input("Enter the product number: "))
+        quantity = int(input(f"Enter quantity of product number {item_name}: "))
+        product = categories[item_name - 1]
+        cart = ShoppingCart()
+        cart.add_product(product, quantity)
+    # elif option == 3:
+
+
+
+
+
+
+
 
 
 
