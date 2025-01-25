@@ -92,19 +92,14 @@
 
 ## My Code
 class Product:
-    def __init__(self, product_id: int, name: str, price: float, quantity_in_stock: int):
+    def __init__(self, product_id, name, price, quantity_in_stock):
         self.product_id = product_id
         self.name = name
         self.price = price
         self.quantity_in_stock = quantity_in_stock
 
-    def check_availability(self, name):
-        if self.quantity_in_stock > 0:
-            print(f"The product {name} is available.")
-            return True
-        else:
-            print(f"Sorry product {name} not available.")
-            return False
+    def check_availability(self):
+        return self.quantity_in_stock > 0
 
     def display_products(self):
         print(f"Product ID: {self.product_id}")
@@ -113,13 +108,13 @@ class Product:
         print(f"No.of.items: {self.price}")
 
 class Electronic(Product):
-    def __init__(self, product_id: int, name: str, price: float, quantity_in_stock: int, brand: str, warranty: float):
+    def __init__(self, product_id, name, price, quantity_in_stock, brand, warranty):
         super().__init__(product_id, name, price, quantity_in_stock)
         self.brand = brand
         self.warranty = warranty
 
-    def check_availability(self, name):
-        super().check_availability(name)
+    def check_availability(self):
+        super().check_availability()
 
     def display_products(self):
         super().display_products()
@@ -127,13 +122,13 @@ class Electronic(Product):
         print(f"Product Warranty: {self.warranty} Yrs")
 
 class Clothing(Product):
-    def __init__(self, product_id: int, name: str, price: float, quantity_in_stock: int, size: str, material: str):
+    def __init__(self, product_id, name, price, quantity_in_stock, size, material):
         super().__init__(product_id, name, price, quantity_in_stock)
         self.size = size
         self.material = material
 
-    def check_availability(self, name):
-        super().check_availability(name)
+    def check_availability(self):
+        super().check_availability()
 
     def display_products(self):
         super().display_products()
@@ -145,7 +140,8 @@ class ShoppingCart:
         self.products = {}
 
     def add_product(self, product, quantity):
-        if product.check_availability(product.name):
+        print(f"{product.check_availability()}")
+        if product.check_availability():
             self.products[product.name] = [product, quantity, quantity * product.price]
             print(f"Product {product.name} with quantity {quantity} added to the cart!")
         else:
@@ -188,7 +184,7 @@ class ShoppingCart:
 
 
 class Order:
-    def __init__(self, order_id: int, total_price: float, shopping_cart):
+    def __init__(self, order_id, total_price, shopping_cart):
         self.order_id = order_id
         self.total_price = total_price
         self.shopping_cart = shopping_cart
@@ -238,11 +234,13 @@ while command != "exit":
             print("\n")
     elif option == 2:
         item_name = int(input("Enter the product number: "))
-        quantity = int(input(f"Enter quantity of product number {item_name}: "))
-        product = categories[item_name - 1]
+        sel_quantity = int(input(f"Enter quantity of product number {item_name}: "))
+        sel_product = categories[item_name - 1]
+        print(sel_product)
         cart = ShoppingCart()
-        cart.add_product(product, quantity)
+        cart.add_product(sel_product, sel_quantity)
     # elif option == 3:
+
 
 
 
