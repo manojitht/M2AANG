@@ -42,3 +42,31 @@
 # Let me know if you need any clarifications!
 
 ## My Code:
+class Books:
+    def __init__(self, book_id, title, author, genre, quantity, publication_year):
+        self.book_id = book_id
+        self.title = title
+        self.author = author
+        self.genre = genre
+        self.quantity = quantity
+        self.publication_year = publication_year
+
+    def search_books(self):
+        pass
+
+    def borrow_book(self):
+        pass
+
+    def return_book(self):
+        pass
+
+
+class Members:
+    def __init__(self, member_id, name, email, address):
+        self.member_id = member_id
+        self.name = name
+        self.email = email
+        self.address = address
+        self.borrowed_books = []
+
+
