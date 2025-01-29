@@ -69,4 +69,7 @@ class Members:
         self.address = address
         self.borrowed_books = []
 
+class Librarians:
+    pass
+
 
