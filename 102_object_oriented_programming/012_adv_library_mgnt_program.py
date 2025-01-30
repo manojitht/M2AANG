@@ -70,6 +70,7 @@ class Members:
         self.borrowed_books = []
 
 class Librarians:
-    pass
+    def add_members(self):
+        pass
 
 
