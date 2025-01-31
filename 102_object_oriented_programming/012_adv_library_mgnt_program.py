@@ -73,4 +73,10 @@ class Librarians:
     def add_members(self):
         pass
 
+    def add_books(self):
+        pass
+
+    def remove_books(self):
+        pass
+
 
