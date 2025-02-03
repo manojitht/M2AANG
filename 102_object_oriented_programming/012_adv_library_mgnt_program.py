@@ -51,8 +51,21 @@ class Books:
         self.quantity = quantity
         self.publication_year = publication_year
 
-    def search_books(self):
-        pass
+    def __str__(self):
+        return f"Id: {self.book_id}, Title: {self.title}, Author: {self.author}, Genre: {self.genre}, Quantity: {self.quantity}, Year: {self.publication_year}."
+
+class Person:
+    def __init__(self, name, email):
+        self.name = name
+        self.email = email
+
+
+class Members(Person):
+    def __init__(self, member_id, name, email, address):
+        super().__init__(name, email)
+        self.member_id = member_id
+        self.address = address
+        self.borrowed_books = []
 
     def borrow_book(self):
         pass
@@ -60,29 +73,39 @@ class Books:
     def return_book(self):
         pass
 
+    def overdue_tracking(self):
+        pass
 
-class Members:
-    def __init__(self, member_id, name, email, address):
-        self.member_id = member_id
-        self.name = name
-        self.email = email
-        self.address = address
-        self.borrowed_books = []
+    def notification(self):
+        pass
 
-class Librarians:
+
+class Librarians(Person):
+    def __init__(self, librarian_id, name, email):
+        super().__init__(name, email)
+        self.librarian_id = librarian_id
+
     def add_members(self):
         pass
 
-    def add_books(self):
+    def remove_members(self):
         pass
 
-    def remove_books(self):
+    def add_book(self):
         pass
 
-    def overdue_tracker(self):
+    def remove_book(self):
         pass
 
-    def send_notifications(self):
+
+class Library:
+    def __init__(self):
+        self.books = {}
+        self.librarians = {}
+        self.members = {}
+
+    def search_book(self):
         pass
+
 
 
