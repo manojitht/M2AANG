@@ -84,15 +84,19 @@ class Librarians(Person):
         new_member = Members(cls.generate_member_id, name, email, address)
         library = Library()
         library.members[cls.generate_member_id] = new_member
-        print(f"New member {name} added to the Library successfully!")
-
+        print(f"New member '{name}' added to the Library successfully!")
 
     def remove_members(self):
         pass
 
     @classmethod
-    def add_book(cls, title, author, genre, quantity, publication_year):
-        pass
+    def add_book(cls, title: str, author: str, genre: str, quantity: int, publication_year: int):
+        cls.generate_book_id += 1
+        new_book = Books(cls.generate_book_id, title, author, genre, quantity, publication_year)
+        library = Library()
+        library.books[cls.generate_book_id] = new_book
+        print(f"New book '{title}' added to the Library successfully!")
+        print(library.books)
 
     def remove_book(self):
         pass
@@ -116,6 +120,10 @@ class Members(Person):
 
     def notification(self):
         pass
+
+Librarians.add_members("Manojith", "manojith@gmail.com", "647 1/1, Aluthmawatha Road, Colombo - 15")
+Librarians.add_members("Kisho Kumar", "kisho@gmail.com", "647 1/1, Aluthmawatha Road, Colombo - 15")
+Librarians.add_book("Cracking the Coding Interview", "Gayle Laakmann", "Technology", 5, 2000)
 
 
 
