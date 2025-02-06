@@ -50,8 +50,20 @@ class Library:
         self.librarians = {}
         self.members = {}
 
-    def search_book(self):
-        pass
+    def search_book(self, keyword):
+        for book in self.books.values():
+            if book.book_id == keyword:
+                print(f"Book found {book.book_id}, Book Name: {book.title}.")
+            elif book.title == keyword:
+                print(f"Book found with name: {book.title}.")
+            elif book.author == keyword:
+                print(f"Book found {book.author}, Book Name: {book.title}.")
+            elif book.genre == keyword:
+                print(f"Book found with {book.genre}, Book Name: {book.title}.")
+            elif book.publication_year == keyword:
+                print(f"Book found with {book.publication_year}, Book Name: {book.title}.")
+            else:
+                print(f"No books found with keyword '{keyword}'.")
 
 
 class Books:
@@ -127,9 +139,9 @@ class Members(Person):
                 selected_book = library.books[book_id]
                 if selected_book.status == "available":
                     selected_book.status = "borrowed"
-                    member.borrowed_books[selected_book.title] = datetime.now()
+                    # member.borrowed_books[selected_book.title] = [datetime.now().year, datetime.now().month, datetime.now().day]
+                    member.borrowed_books[selected_book.title] = [2025, 1, 16]
                     print(f"The book '{selected_book.title}' was borrowed from library by {member.name}!")
-                    print(member.borrowed_books)
                 else:
                     print(f"The book '{selected_book.title}' was already borrowed.")
             else:
@@ -138,26 +150,35 @@ class Members(Person):
             print(f"You've already borrowed {len(member.borrowed_books)} books, only 5 books is allowed to borrow.")
 
     @staticmethod
+    def overdue_tracking(book_title: str, member: object):
+        borrowed_date = member.borrowed_books[book_title]
+        borrowed_year, borrowed_month, borrowed_day = borrowed_date
+        overdue = datetime(datetime.now().year, datetime.now().month, datetime.now().day) - datetime(borrowed_year, borrowed_month, borrowed_day)
+        if overdue.days > 14:
+            days = overdue.days - 14
+            overdue_fees = days * 0.50
+        else:
+            overdue_fees = 0
+        return f"for excess {days} days is ${overdue_fees}."
+
+    @staticmethod
     def return_book(book_id: int, member_id: int, library: object):
         member = library.members[member_id]
         if book_id in library.books.keys():
             selected_book = library.books[book_id]
             if selected_book.status == "borrowed":
                 selected_book.status = "available"
+                print(f"The book '{selected_book.title}' was returned to the library by '{member.name}', Overdue charges: {Members.overdue_tracking(selected_book.title, member)}")
                 member.borrowed_books.pop(selected_book.title)
-                print(f"The book '{selected_book.title}' was returned to the library by {member.name}!")
-                print(member.borrowed_books)
             else:
                 print(f"The book '{selected_book.title}' was already returned.")
         else:
             print(f"The books is not in library, please check!")
 
+    @staticmethod
+    def search_book(keyword, library: object):
+        library.search_book(keyword)
 
-    def overdue_tracking(self):
-        pass
-
-    def notification(self):
-        pass
 
 
 library = Library()
@@ -168,6 +189,7 @@ Librarians.add_book("Python for Automation", "Joe Laakmann", "Technology", 5, 20
 Members.borrow_book(1, 1, library)
 Members.borrow_book(1, 2, library)
 Members.return_book(1, 1, library)
+Members.search_book("Technology", library)
 
 
 
