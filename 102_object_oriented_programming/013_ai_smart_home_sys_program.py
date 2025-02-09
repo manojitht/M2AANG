@@ -2,9 +2,6 @@
 # **Problem Statement:**
 #
 # You are designing an **AI-powered Smart Home System** using **OOP in Python**. The system should manage different types of smart devices and allow remote control via a central hub.
-#
-# ---
-#
 # ### **🛠 Requirements:**
 # 1. **Base Class: `SmartDevice`**
 #    - Common attributes: `device_id`, `name`, `status` (`on`/`off`).
