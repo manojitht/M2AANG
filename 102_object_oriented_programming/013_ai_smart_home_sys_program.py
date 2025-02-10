@@ -33,3 +33,75 @@
 #    - Use **`@classmethod`** and **`@staticmethod`** where necessary.
 #    - Ensure proper use of **encapsulation** and **abstraction**.
 #    - Use **Python built-in functions** wherever possible.
+
+# My Code:
+
+class SmartDevice:
+    def __init__(self, device_id, name, status):
+        self.device_id = device_id
+        self.name = name
+        self.status = status
+
+    def turn_on(self):
+        self.status = "on"
+        return self.status
+
+    def turn_off(self):
+        self.status = "off"
+        return self.status
+
+    def set_device_id(self, device_id):
+        self.device_id = device_id
+        return self.device_id
+
+
+class SmartLight(SmartDevice):
+    def __init__(self, device_id, name, status, brightness, color):
+        super().__init__(device_id, name, status)
+        self.brightness = brightness
+        self.color = color
+
+    def set_brightness_level(self, level):
+        if 0 < level <= 100:
+            self.brightness = int(level)
+        else:
+            print(f"Invalid brightness level entered {level}, please check.")
+        return self.brightness
+
+    def set_color(self, rgb):
+        self.color = rgb
+        return self.color
+
+
+class SmartThermostat(SmartDevice):
+    def __init__(self, device_id, name, status, temperature):
+        super().__init__(device_id, name, status)
+        self.temperature = temperature
+
+    def set_temperature(self, degree):
+        if type(degree) == 'int':
+            self.temperature = degree
+        else:
+            print(f"The degree must be a numeral value, please check!")
+        return self.temperature
+
+
+class SmartLock(SmartDevice):
+    def __init__(self, device_id, name, status, is_locked):
+        super().__init__(device_id, name, status)
+        self.is_locked = is_locked
+
+    def lock(self):
+        if not self.lock:
+            self.is_locked = True
+            print(f"SmartLock locked successfully!")
+        else:
+            print("Already locked!")
+
+    def unlock(self):
+        if self.lock:
+            self.is_locked = False
+            print("SmartLock unlocked successfully!")
+        else:
+            print("Already unlocked!")
+
