@@ -34,8 +34,9 @@
 #    - Ensure proper use of **encapsulation** and **abstraction**.
 #    - Use **Python built-in functions** wherever possible.
 
-# My Code:
 
+
+# My Code:
 class SmartDevice:
     def __init__(self, device_id, name, status):
         self.device_id = device_id
@@ -89,18 +90,19 @@ class SmartLock(SmartDevice):
         self.is_locked = is_locked
 
     def lock(self):
-        if not self.lock:
+        if not self.is_locked:
             self.is_locked = True
             print(f"SmartLock locked successfully!")
         else:
             print("Already locked!")
 
     def unlock(self):
-        if self.lock:
+        if self.is_locked:
             self.is_locked = False
             print("SmartLock unlocked successfully!")
         else:
             print("Already unlocked!")
+
 
 class SmartHomeHub:
     __instance_exists = None
@@ -126,25 +128,22 @@ class SmartHomeHub:
         else:
             print(f"The device {device.name}, already exists..")
 
-
     @staticmethod
     def remove_device(device_id):
         for device in SmartHomeHub.devices_list:
             if device_id == device.device_id:
-                SmartHomeHub.devices_list.pop(device)
-                print(f"The device id:{device_id}, name:{device.name} was removed successfully!")
-            else:
-                print(f"Device id {device_id} wasn't found in our list.")
-
+                SmartHomeHub.devices_list.remove(device)
+                print(f"The device id: {device_id}, name:{device.name} was removed successfully!")
+                return
+        print(f"Device with id {device_id} not found.")
 
     @staticmethod
     def get_device(device_id):
         for device in SmartHomeHub.devices_list:
             if device_id == device.device_id:
                 print(f"Device id:{device_id} found, name: {device.name}, status: {device.status}")
-            else:
-                print(f"Device not found with id: {device_id}")
-
+                return
+        print(f"Device with id {device_id} not found.")
 
     @staticmethod
     def control_device(device_id, action, *values):
@@ -154,21 +153,22 @@ class SmartHomeHub:
                     device.turn_on()
                 elif action == "turn_off":
                     device.turn_off()
-                elif action == "set_temperature":
-                    device.set_temperature(values)
-                elif action == "set_brightness_level":
-                    brightness = list(values)
-                    device.set_brightness_level(brightness[0])
-                elif action == "set_color":
-                    color = list(values)
-                    device.set_color(color)
-                elif action == "lock":
+                elif action == "set_temperature" and isinstance(device, SmartThermostat):
+                    device.set_temperature(values[0])
+                elif action == "set_brightness_level" and isinstance(device, SmartLight):
+                    device.set_brightness_level(values[0])
+                elif action == "set_color" and isinstance(device, SmartLight):
+                    device.set_color(values[0])
+                elif action == "lock" and isinstance(device, SmartLock):
                     device.lock()
-                elif action == "unlock":
+                elif action == "unlock" and isinstance(device, SmartLock):
                     device.unlock()
                 else:
-                    print(f"action {action} was not available for the {device.name}.")
-                print(f"Device name: {device.name}, took controlled with action {action}.")
+                    print(f"Action '{action}' is not available for {device.name}.")
+                    return
+                print(f"Device '{device.name}' successfully executed '{action}'.")
+                return
+        print(f"Device with id {device_id} not found.")
 
     @staticmethod
     def list_devices():
@@ -193,6 +193,8 @@ hub.control_device(lock.device_id, "unlock")
 
 hub.list_devices()
 
+hub.remove_device(1)
+hub.get_device(2)
 
 
 
