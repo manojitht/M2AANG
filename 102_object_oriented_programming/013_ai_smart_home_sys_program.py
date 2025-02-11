@@ -79,10 +79,7 @@ class SmartThermostat(SmartDevice):
         self.temperature = temperature
 
     def set_temperature(self, degree):
-        if type(degree) == 'int':
-            self.temperature = degree
-        else:
-            print(f"The degree must be a numeral value, please check!")
+        self.temperature = degree
         return self.temperature
 
 
@@ -104,4 +101,102 @@ class SmartLock(SmartDevice):
             print("SmartLock unlocked successfully!")
         else:
             print("Already unlocked!")
+
+class SmartHomeHub:
+    __instance_exists = None
+    devices_list = []
+
+    @staticmethod
+    def create_instance():
+        if not SmartHomeHub.__instance_exists:
+            SmartHomeHub()
+        return SmartHomeHub.__instance_exists
+
+    def __init__(self):
+        if SmartHomeHub.__instance_exists:
+            raise Exception("SmartHomeHub Object already exists.")
+        else:
+            SmartHomeHub.__instance_exists = self
+
+    @classmethod
+    def add_device(cls, device):
+        if device not in cls.devices_list:
+            cls.devices_list.append(device)
+            print(f"The device {device.name}, added successfully!")
+        else:
+            print(f"The device {device.name}, already exists..")
+
+
+    @staticmethod
+    def remove_device(device_id):
+        for device in SmartHomeHub.devices_list:
+            if device_id == device.device_id:
+                SmartHomeHub.devices_list.pop(device)
+                print(f"The device id:{device_id}, name:{device.name} was removed successfully!")
+            else:
+                print(f"Device id {device_id} wasn't found in our list.")
+
+
+    @staticmethod
+    def get_device(device_id):
+        for device in SmartHomeHub.devices_list:
+            if device_id == device.device_id:
+                print(f"Device id:{device_id} found, name: {device.name}, status: {device.status}")
+            else:
+                print(f"Device not found with id: {device_id}")
+
+
+    @staticmethod
+    def control_device(device_id, action, *values):
+        for device in SmartHomeHub.devices_list:
+            if device_id == device.device_id:
+                if action == "turn_on":
+                    device.turn_on()
+                elif action == "turn_off":
+                    device.turn_off()
+                elif action == "set_temperature":
+                    device.set_temperature(values)
+                elif action == "set_brightness_level":
+                    brightness = list(values)
+                    device.set_brightness_level(brightness[0])
+                elif action == "set_color":
+                    color = list(values)
+                    device.set_color(color)
+                elif action == "lock":
+                    device.lock()
+                elif action == "unlock":
+                    device.unlock()
+                else:
+                    print(f"action {action} was not available for the {device.name}.")
+                print(f"Device name: {device.name}, took controlled with action {action}.")
+
+    @staticmethod
+    def list_devices():
+        for device in SmartHomeHub.devices_list:
+            print(f"Device id: {device.device_id}, name: {device.name}, status: {device.status}.")
+
+
+hub = SmartHomeHub()
+light = SmartLight(1, "Living Room Light", "on", 55, "white" )
+thermostat = SmartThermostat(2, "Bedroom Thermostat", "on", 23)
+lock = SmartLock(3, "Keypad Lock", "on", True)
+
+hub.add_device(light)
+hub.add_device(thermostat)
+hub.add_device(lock)
+
+hub.control_device(light.device_id, "turn_off")
+hub.control_device(light.device_id, "turn_on")
+hub.control_device(light.device_id, "set_brightness_level", 95)
+hub.control_device(thermostat.device_id, "set_temperature", 22)
+hub.control_device(lock.device_id, "unlock")
+
+hub.list_devices()
+
+
+
+
+
+
+
 
