@@ -175,6 +175,9 @@ class SmartHomeHub:
         for device in SmartHomeHub.devices_list:
             print(f"Device id: {device.device_id}, name: {device.name}, status: {device.status}.")
 
+class Event:
+    pass
+
 
 hub = SmartHomeHub()
 light = SmartLight(1, "Living Room Light", "on", 55, "white" )
@@ -197,6 +200,7 @@ hub.remove_device(1)
 hub.get_device(2)
 
 # Using the best practices
+
 
 
 
