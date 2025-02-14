@@ -175,8 +175,6 @@ class SmartHomeHub:
         for device in SmartHomeHub.devices_list:
             print(f"Device id: {device.device_id}, name: {device.name}, status: {device.status}.")
 
-class Event:
-    pass
 
 
 hub = SmartHomeHub()
