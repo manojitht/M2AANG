@@ -37,6 +37,10 @@
 
 
 # My Code:
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
 class SmartDevice:
     def __init__(self, device_id, name, status):
         self.device_id = device_id
@@ -66,7 +70,7 @@ class SmartLight(SmartDevice):
         if 0 < level <= 100:
             self.brightness = int(level)
         else:
-            print(f"Invalid brightness level entered {level}, please check.")
+            logging.info(f"Invalid brightness level entered {level}, please check.")
         return self.brightness
 
     def set_color(self, rgb):
@@ -92,16 +96,16 @@ class SmartLock(SmartDevice):
     def lock(self):
         if not self.is_locked:
             self.is_locked = True
-            print(f"SmartLock locked successfully!")
+            logging.info(f"SmartLock locked successfully!")
         else:
-            print("Already locked!")
+            logging.info("Already locked!")
 
     def unlock(self):
         if self.is_locked:
             self.is_locked = False
-            print("SmartLock unlocked successfully!")
+            logging.info("SmartLock unlocked successfully!")
         else:
-            print("Already unlocked!")
+            logging.info("Already unlocked!")
 
 
 class SmartHomeHub:
@@ -124,26 +128,26 @@ class SmartHomeHub:
     def add_device(cls, device):
         if device not in cls.devices_list:
             cls.devices_list.append(device)
-            print(f"The device {device.name}, added successfully!")
+            logging.info(f"The device {device.name}, added successfully!")
         else:
-            print(f"The device {device.name}, already exists..")
+            logging.info(f"The device {device.name}, already exists..")
 
     @staticmethod
     def remove_device(device_id):
         for device in SmartHomeHub.devices_list:
             if device_id == device.device_id:
                 SmartHomeHub.devices_list.remove(device)
-                print(f"The device id: {device_id}, name:{device.name} was removed successfully!")
+                logging.info(f"The device id: {device_id}, name:{device.name} was removed successfully!")
                 return
-        print(f"Device with id {device_id} not found.")
+        logging.info(f"Device with id {device_id} not found.")
 
     @staticmethod
     def get_device(device_id):
         for device in SmartHomeHub.devices_list:
             if device_id == device.device_id:
-                print(f"Device id:{device_id} found, name: {device.name}, status: {device.status}")
+                logging.info(f"Device id:{device_id} found, name: {device.name}, status: {device.status}")
                 return
-        print(f"Device with id {device_id} not found.")
+        logging.info(f"Device with id {device_id} not found.")
 
     @staticmethod
     def control_device(device_id, action, *values):
@@ -164,16 +168,16 @@ class SmartHomeHub:
                 elif action == "unlock" and isinstance(device, SmartLock):
                     device.unlock()
                 else:
-                    print(f"Action '{action}' is not available for {device.name}.")
+                    logging.info(f"Action '{action}' is not available for {device.name}.")
                     return
-                print(f"Device '{device.name}' successfully executed '{action}'.")
+                logging.info(f"Device '{device.name}' successfully executed '{action}'.")
                 return
-        print(f"Device with id {device_id} not found.")
+        logging.info(f"Device with id {device_id} not found.")
 
     @staticmethod
     def list_devices():
         for device in SmartHomeHub.devices_list:
-            print(f"Device id: {device.device_id}, name: {device.name}, status: {device.status}.")
+            logging.info(f"Device id: {device.device_id}, name: {device.name}, status: {device.status}.")
 
 
 
