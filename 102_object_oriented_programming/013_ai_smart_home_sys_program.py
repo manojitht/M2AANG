@@ -39,6 +39,8 @@
 # My Code:
 import logging
 
+from dulwich.cli import commands
+
 logging.basicConfig(level=logging.INFO)
 
 class SmartDevice:
@@ -110,7 +112,6 @@ class SmartLock(SmartDevice):
 
 class SmartHomeHub:
     __instance_exists = None
-    devices_list = []
 
     @staticmethod
     def create_instance():
@@ -123,61 +124,57 @@ class SmartHomeHub:
             raise Exception("SmartHomeHub Object already exists.")
         else:
             SmartHomeHub.__instance_exists = self
+            self.devices_list = {}
 
-    @classmethod
-    def add_device(cls, device):
-        if device not in cls.devices_list:
-            cls.devices_list.append(device)
+
+    def add_device(self, device):
+        if device.device_id not in self.devices_list:
+            self.devices_list[device.device_id] = device
             logging.info(f"The device {device.name}, added successfully!")
         else:
             logging.info(f"The device {device.name}, already exists..")
 
-    @staticmethod
-    def remove_device(device_id):
-        for device in SmartHomeHub.devices_list:
-            if device_id == device.device_id:
-                SmartHomeHub.devices_list.remove(device)
-                logging.info(f"The device id: {device_id}, name:{device.name} was removed successfully!")
-                return
-        logging.info(f"Device with id {device_id} not found.")
+    def remove_device(self, device_id):
+        if device_id in self.devices_list:
+            removed_device = self.devices_list.pop(device_id)
+            logging.info(f"Device {removed_device.name} was removed successfully!")
+        else:
+            logging.error(f"Device with id:{device_id} was not found.")
 
-    @staticmethod
-    def get_device(device_id):
-        for device in SmartHomeHub.devices_list:
-            if device_id == device.device_id:
-                logging.info(f"Device id:{device_id} found, name: {device.name}, status: {device.status}")
-                return
-        logging.info(f"Device with id {device_id} not found.")
+    def get_device(self, device_id):
+        if device_id in self.devices_list:
+            get_device = self.devices_list[device_id]
+            logging.info(f"Device id:{device_id} found, name: {get_device.name}, status: {get_device.status}")
+        else:
+            logging.error(f"Device with id:{device_id} was not found.")
 
-    @staticmethod
-    def control_device(device_id, action, *values):
-        for device in SmartHomeHub.devices_list:
-            if device_id == device.device_id:
-                if action == "turn_on":
-                    device.turn_on()
-                elif action == "turn_off":
-                    device.turn_off()
-                elif action == "set_temperature" and isinstance(device, SmartThermostat):
-                    device.set_temperature(values[0])
-                elif action == "set_brightness_level" and isinstance(device, SmartLight):
-                    device.set_brightness_level(values[0])
-                elif action == "set_color" and isinstance(device, SmartLight):
-                    device.set_color(values[0])
-                elif action == "lock" and isinstance(device, SmartLock):
-                    device.lock()
-                elif action == "unlock" and isinstance(device, SmartLock):
-                    device.unlock()
-                else:
-                    logging.info(f"Action '{action}' is not available for {device.name}.")
-                    return
-                logging.info(f"Device '{device.name}' successfully executed '{action}'.")
-                return
-        logging.info(f"Device with id {device_id} not found.")
+    def control_device(self, device_id, action, *values):
+        device = self.devices_list.get(device_id)
 
-    @staticmethod
-    def list_devices():
-        for device in SmartHomeHub.devices_list:
-            logging.info(f"Device id: {device.device_id}, name: {device.name}, status: {device.status}.")
+        if not device:
+            logging.error(f"Device with id:{device_id} was not found.")
+            return
+
+        command_dict = {
+            "turn_on": device.turn_on,
+            "turn_off": device.turn_off,
+            "set_temperature": lambda: device.set_temperature(values[0]) if isinstance(device, SmartThermostat) else None,
+            "set_brightness_level": lambda: device.set_brightness_level(values[0]) if isinstance(device, SmartLight) else None,
+            "set_color": lambda: device.set_color(values[0]) if isinstance(device, SmartLight) else None,
+            "lock": device.lock if isinstance(device, SmartLock) else None,
+            "unlock": device.unlock if isinstance(device, SmartLock) else None,
+        }
+
+        command = command_dict.get(action)
+        if command:
+            command()
+            logging.info(f"Device '{device.name}' successfully executed '{action}'.")
+        else:
+            logging.warning(f"Action '{action}' is not available for {device.name}.")
+
+    def list_devices(self):
+        for device_id, device in self.devices_list.items():
+            logging.info(f"Device id: {device_id}, name: {device.name}, status: {device.status}.")
 
 
 
