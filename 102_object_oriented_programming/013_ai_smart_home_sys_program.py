@@ -39,8 +39,6 @@
 # My Code:
 import logging
 
-from dulwich.cli import commands
-
 logging.basicConfig(level=logging.INFO)
 
 class SmartDevice:
