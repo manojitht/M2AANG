@@ -196,7 +196,7 @@ hub.list_devices()
 hub.remove_device(1)
 hub.get_device(2)
 
-# Using the best practices
+# Using the best practices of threading and asyncio
 
 
 
