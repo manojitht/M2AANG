@@ -165,7 +165,8 @@ class SmartHomeHub:
 
         command = command_dict.get(action)
         if command:
-            command()
+            thread = threading.Thread(target=command)
+            thread.start()
             logging.info(f"Device '{device.name}' successfully executed '{action}'.")
         else:
             logging.warning(f"Action '{action}' is not available for {device.name}.")
