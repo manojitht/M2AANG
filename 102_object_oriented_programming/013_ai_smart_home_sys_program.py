@@ -146,7 +146,7 @@ class SmartHomeHub:
         else:
             logging.error(f"Device with id:{device_id} was not found.")
 
-    async def control_device(self, device_id, action, *values):
+    def control_device(self, device_id, action, *values):
         device = self.devices_list.get(device_id)
 
         if not device:
