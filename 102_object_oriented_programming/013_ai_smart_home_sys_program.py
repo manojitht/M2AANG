@@ -146,7 +146,7 @@ class SmartHomeHub:
         else:
             logging.error(f"Device with id:{device_id} was not found.")
 
-    def control_device(self, device_id, action, *values):
+    async def control_device(self, device_id, action, *values):
         device = self.devices_list.get(device_id)
 
         if not device:
@@ -165,8 +165,10 @@ class SmartHomeHub:
 
         command = command_dict.get(action)
         if command:
-            thread = threading.Thread(target=command)
-            thread.start()
+            # thread = threading.Thread(target=command)
+            # thread.start()
+            task = command()
+            await task
             logging.info(f"Device '{device.name}' successfully executed '{action}'.")
         else:
             logging.warning(f"Action '{action}' is not available for {device.name}.")
