@@ -178,6 +178,8 @@ class SmartHomeHub:
             logging.info(f"Device id: {device_id}, name: {device.name}, status: {device.status}.")
 
 
+def main():
+    pass
 
 hub = SmartHomeHub()
 light = SmartLight(1, "Living Room Light", "on", 55, "white" )
