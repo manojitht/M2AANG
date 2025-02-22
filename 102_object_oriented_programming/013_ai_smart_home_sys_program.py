@@ -179,6 +179,7 @@ class SmartHomeHub:
 
 
 def main():
+    # need to use the asyncio functions to run here..
     pass
 
 hub = SmartHomeHub()
