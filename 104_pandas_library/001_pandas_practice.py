@@ -1,5 +1,4 @@
 def pandas():
     pandas = "file.xslx"
-    print(pandas)
-    print(pandas)
+    print(pandas * 3)
     pass
