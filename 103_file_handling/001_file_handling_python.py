@@ -1,5 +1,4 @@
 def file_handler():
     file = "file_name"
-    print(file)
-    print(file)
+    print(file * 3)
     pass
