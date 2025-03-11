@@ -1,0 +1,11 @@
+
+nums = [54, 26, 85, 12, 36, 55, 99, 84, 10]
+
+def linear_search(value ,array):
+    for i in nums:
+        if i == value:
+            print(f"Found the {value}.")
+            break
+
+
+linear_search(36, nums)
