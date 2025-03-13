@@ -6,6 +6,7 @@ def linear_search(value ,array):
         if i == value:
             print(f"Found the {value}.")
             break
+        print(f"Stopped with {i}")
 
 
 linear_search(36, nums)
