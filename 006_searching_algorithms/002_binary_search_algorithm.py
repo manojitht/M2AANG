@@ -11,7 +11,6 @@ def binary_search(array, low, high, key):
     if low > high:
         print(f"Unsuccessful search and {key} not found in array.")
 
-
 array = [6, 12, 14, 18, 22, 39, 55, 182]
 low = 0
 high = len(array) - 1
