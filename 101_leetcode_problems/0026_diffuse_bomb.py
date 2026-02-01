@@ -31,17 +31,31 @@ from typing import List
 
 class Solution:
     def decrypt(self, code: List[int], k: int) -> List[int]:
-        left = 0
-        right = k
-        circular_array = code + code[:k]
-
+        n = len(code)
+        # Case 1: If k is 0, return all zeros
         if k == 0:
-            return [char*0 for char in code]
-        else:
-            for char in range(len(circular_array)):
-                if k < code[char] and left <= len(code):
-                    code[left] = sum()
-            
+            return [0] * n
+        
+        # Create a result array and extend the code to handle circularity
+        res = [0] * n
+        # Doubling the array makes index wrapping much easier
+        extended_code = code + code
+        
+        for i in range(n):
+            if k > 0:
+                # Sum the next k elements
+                # Start at i+1, end at i+k+1
+                res[i] = sum(extended_code[i + 1 : i + k + 1])
+            else:
+                # Sum the previous |k| elements
+                # We use (i + n) to ensure we have enough "room" to look back
+                # Start at i + n + k, end at i + n
+                res[i] = sum(extended_code[i + n + k : i + n])
+                
+        return res
 
+# Test it out
 sol = Solution()
-print(sol.decrypt([5,7,1,4], 3))
+print(f"k=3:  {sol.decrypt([5,7,1,4], 3)}")   # Output: [12, 10, 16, 13]
+print(f"k=0:  {sol.decrypt([1,2,3,4], 0)}")   # Output: [0, 0, 0, 0]
+print(f"k=-2: {sol.decrypt([2,4,9,3], -2)}")  # Output: [12, 5, 6, 13]
