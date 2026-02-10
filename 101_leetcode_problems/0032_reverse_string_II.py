@@ -11,7 +11,7 @@
 # Input: s = "abcd", k = 2
 # Output: "bacd"
 
-## My Solution
+## My Solution (pattern: similar two pointer)
 class Solution:
     def reverseStr(self, s: str, k: int) -> str:
         result = []
